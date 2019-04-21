@@ -1,0 +1,19 @@
+<div class="row columns">
+
+  <input type="text" id="message" placeholder="Chat here..." (keyup.enter)="chatSend($event.target.value)"
+    [(ngModel)]="msgVal" />
+
+  <div class="chat-container" *ngFor="let item of items | async">
+    <mat-card class="messageCard">
+      <mat-card-header>
+          <img src="{{auth.user.photoURL}}" alt="" mat-card-avatar>
+        <mat-card-title>{{decryptMessage(item.name)}}</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        {{decryptMessage(item.msg)}}
+      </mat-card-content>
+    </mat-card>
+    <br>
+  </div>
+</div>
