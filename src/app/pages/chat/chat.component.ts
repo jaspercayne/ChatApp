@@ -30,7 +30,8 @@ export class ChatComponent implements OnInit {
       this.db.collection('messages').add({
         name: this.crypto.encryptData(this.name),
         msg: this.crypto.encryptData(theirMessage),
-        timestamp: + new Date()
+        timestamp: + new Date(),
+        avatar: this.auth.user.photoURL
       }).then(ref => {
         console.log('Added document with ID: ', ref.id);
       });
