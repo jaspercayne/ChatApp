@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { auth } from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from 'firebase';
+import { UserService } from './user.service';
 
 
 @Injectable({
@@ -12,7 +13,7 @@ export class AuthService {
   user: User;
   isLoggedIn: boolean;
 
-  constructor(public afAuth: AngularFireAuth, public router: Router) {
+  constructor(public afAuth: AngularFireAuth, public router: Router, private users: UserService) {
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.user = user;
@@ -50,5 +51,7 @@ export class AuthService {
     await this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
     this.isLoggedIn = true;
     this.router.navigate(['/chat']);
+    console.log(this.afAuth.auth.currentUser.displayName);
+    this.users.createUser(this.afAuth.auth.currentUser);
   }
 }
